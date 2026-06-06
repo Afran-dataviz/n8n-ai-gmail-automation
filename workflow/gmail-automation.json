@@ -1,0 +1,323 @@
+{
+  "name": "Gmail Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f6033108-9467-4f4b-ae36-7bceeca5ddac",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1W0HniJTeRQc3f0_xYk_NcvIKkfTrk_Nf1zUc00xU38I",
+          "mode": "list",
+          "cachedResultName": "n8nsample",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1W0HniJTeRQc3f0_xYk_NcvIKkfTrk_Nf1zUc00xU38I/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 242644792,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1W0HniJTeRQc3f0_xYk_NcvIKkfTrk_Nf1zUc00xU38I/edit#gid=242644792"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "34fa7cf0-c5f6-441c-b8d6-8cf7d9170cc3",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OH5aTqPKJGYcfXkj",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Name {{ $json.Name }}\nCompany{{ $json.Company }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=You are an elite B2B Sales Development Representative and Copywriter specializing in cold email outreach.\nYour objective is to write highly personalized, convincing, and professional cold emails pitching custom AI chatbot solutions.\n\n### RULES AND CONSTRAINTS\n1. Tone: Professional, confident, and consultative. Avoid aggressive sales jargon, overly enthusiastic language (no exclamation point overload), and robotic phrasing. Write like a human executive reaching out to a peer.\n2. Length & Readability: Keep the email concise and scannable (strictly under 120 words). Use short paragraphs.\n3. Structure: \n   - Hook: Address a specific industry pain point or mention a detail about the prospect's company.\n   - Value Proposition: Explain exactly how a custom AI chatbot solves their problem (e.g., 24/7 lead capture, reducing customer support costs, instant resolutions).\n   - Call to Action (CTA): End with a single, low-friction question (e.g., asking to send over a 2-minute demo or a quick question about their current process).\n4. NO PLACEHOLDERS: You are strictly forbidden from using brackets, parentheses, or placeholders like [Your Name], [Company Name], or [Link]. If a piece of information is not provided, write around it smoothly. \n5. Sign-off: End the email body text with a simple \"Best,\" or \"Thanks,\" and NOTHING else. Do not generate a name after the sign-off.\n6. Strict JSON Output: You must output ONLY valid, parsable JSON. Do not include markdown formatting (like ```json), conversational text, greetings, or explanations before or after the JSON object.\n\n### INPUT CONTEXT\nDraft the email based on the following prospect data provided in the user prompt:\n- Prospect Name\n- Company Name\n- Industry\n- Focus Area/Pain Point\n\n### EXPECTED OUTPUT SCHEMA\nYou must return your email using the exact JSON structure below:\n\n{\n  \"subject_line\": \"A short, curiosity-driven subject line (max 5 words, use sentence case, do not sound like marketing spam).\",\n  \"email_body\": \"The complete drafted email ending with a simple sign-off and no placeholders.\"\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "891999de-c5a3-4905-908e-ea73f7fbe577",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"subject\":\"subject\",\n  \"body\":\"body\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        592,
+        208
+      ],
+      "id": "990cd8d7-0a3c-4f92-8fc0-4a103dc54a58",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        272,
+        208
+      ],
+      "id": "31829b55-1622-47ad-b842-67e1afbc4677",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "x7ZWm2ct43AxYnwg",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Get row(s) in sheet').item.json.Email }}",
+        "subject": "={{ $json.output.subject }}",
+        "emailType": "text",
+        "message": "={{ $json.output.body }}",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "AutoNation"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        768,
+        0
+      ],
+      "id": "904d3857-da1a-4e8b-ac14-72cb4987b7df",
+      "name": "Send a message",
+      "webhookId": "539fe05e-6ce1-46a9-bedc-f489e2775e74",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Up4OglRW4h0wsAII",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1W0HniJTeRQc3f0_xYk_NcvIKkfTrk_Nf1zUc00xU38I",
+          "mode": "list",
+          "cachedResultName": "n8nsample",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1W0HniJTeRQc3f0_xYk_NcvIKkfTrk_Nf1zUc00xU38I/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 242644792,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1W0HniJTeRQc3f0_xYk_NcvIKkfTrk_Nf1zUc00xU38I/edit#gid=242644792"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Get row(s) in sheet').item.json.row_number }}",
+            "Status": "Sent"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        976,
+        0
+      ],
+      "id": "769a331b-7e5d-4436-9010-d819d790d866",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OH5aTqPKJGYcfXkj",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "231d2a50-a76c-45b7-bd0a-918b5908513c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5c390f58fe3396bfbca6b98d19a0d2efc37af95889cf46c012a523ba98167375"
+  },
+  "id": "R4iDBPZGVe3XZ9hZ",
+  "tags": []
+}

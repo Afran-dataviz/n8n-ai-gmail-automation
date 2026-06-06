@@ -1,5 +1,17 @@
 # AI-Powered Gmail Automation with n8n
 
+## Workflow
+
+Schedule Trigger
+↓
+Google Sheets
+↓
+Gemini AI Agent
+↓
+Gmail
+↓
+Google Sheets Update
+
 ## Overview
 
 This workflow automatically:

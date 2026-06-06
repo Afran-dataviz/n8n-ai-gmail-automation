@@ -1,2 +1,5 @@
 .env
-
+credentials.json
+oauth.json
+.n8n/
+*.log

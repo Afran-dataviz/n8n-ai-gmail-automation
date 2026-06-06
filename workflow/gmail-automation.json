@@ -28,14 +28,14 @@
           "value": "YOUR_SHEET_ID",
           "mode": "list",
           "cachedResultName": "n8nsample",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1W0HniJTeRQc3f0_xYk_NcvIKkfTrk_Nf1zUc00xU38I/edit?usp=drivesdk"
+          "cachedResultUrl":  "https://docs.google.com/spreadsheets/..."
         },
         "sheetName": {
           "__rl": true,
           "value": 242644792,
           "mode": "list",
           "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1W0HniJTeRQc3f0_xYk_NcvIKkfTrk_Nf1zUc00xU38I/edit#gid=242644792"
+          "cachedResultUrl":  "https://docs.google.com/spreadsheets/..."
         },
         "filtersUI": {
           "values": [
@@ -58,7 +58,7 @@
       "name": "Get row(s) in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "OH5aTqPKJGYcfXkj",
+          "id": "REDACTED",
           "name": "Google Sheets account"
         }
       }
@@ -108,7 +108,7 @@
       "name": "Google Gemini Chat Model",
       "credentials": {
         "googlePalmApi": {
-          "id": "x7ZWm2ct43AxYnwg",
+          "id": "REDACTED",
           "name": "Google Gemini(PaLM) Api account"
         }
       }
@@ -132,10 +132,10 @@
       ],
       "id": "904d3857-da1a-4e8b-ac14-72cb4987b7df",
       "name": "Send a message",
-      "webhookId": "539fe05e-6ce1-46a9-bedc-f489e2775e74",
+      "webhookId": "REDACTED",
       "credentials": {
         "gmailOAuth2": {
-          "id": "Up4OglRW4h0wsAII",
+          "id": "REDACTED",
           "name": "Gmail account"
         }
       }
@@ -148,14 +148,14 @@
           "value": "YOUR_SHEET_ID",
           "mode": "list",
           "cachedResultName": "n8nsample",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1W0HniJTeRQc3f0_xYk_NcvIKkfTrk_Nf1zUc00xU38I/edit?usp=drivesdk"
+          "cachedResultUrl":  "https://docs.google.com/spreadsheets/..."
         },
         "sheetName": {
           "__rl": true,
           "value": 242644792,
           "mode": "list",
           "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1W0HniJTeRQc3f0_xYk_NcvIKkfTrk_Nf1zUc00xU38I/edit#gid=242644792"
+          "cachedResultUrl":  "https://docs.google.com/spreadsheets/..."
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -233,7 +233,7 @@
       "name": "Update row in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "OH5aTqPKJGYcfXkj",
+          "id": "REDACTED",
           "name": "Google Sheets account"
         }
       }
@@ -313,11 +313,11 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "231d2a50-a76c-45b7-bd0a-918b5908513c",
+  "versionId": "REDACTED",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "5c390f58fe3396bfbca6b98d19a0d2efc37af95889cf46c012a523ba98167375"
+    "instanceId": "REDACTED"
   },
-  "id": "R4iDBPZGVe3XZ9hZ",
+  "id": "REDACTED",
   "tags": []
 }

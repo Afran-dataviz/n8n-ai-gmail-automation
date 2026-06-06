@@ -25,7 +25,7 @@
       "parameters": {
         "documentId": {
           "__rl": true,
-          "value": "1W0HniJTeRQc3f0_xYk_NcvIKkfTrk_Nf1zUc00xU38I",
+          "value": "YOUR_SHEET_ID",
           "mode": "list",
           "cachedResultName": "n8nsample",
           "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1W0HniJTeRQc3f0_xYk_NcvIKkfTrk_Nf1zUc00xU38I/edit?usp=drivesdk"
@@ -145,7 +145,7 @@
         "operation": "update",
         "documentId": {
           "__rl": true,
-          "value": "1W0HniJTeRQc3f0_xYk_NcvIKkfTrk_Nf1zUc00xU38I",
+          "value": "YOUR_SHEET_ID",
           "mode": "list",
           "cachedResultName": "n8nsample",
           "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1W0HniJTeRQc3f0_xYk_NcvIKkfTrk_Nf1zUc00xU38I/edit?usp=drivesdk"
